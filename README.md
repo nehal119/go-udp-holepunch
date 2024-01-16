@@ -4,6 +4,15 @@ Go. It includes the signal server and a client.
 
 ![Demo](/demo.gif "Demo")
 
+## Using http rendezvous server
+1. rendezvous server runs on http exposing `/register` route.
+2. When two clients are connected, each get others udp ip address and port to start hole punching. 
+```bash
+  node rendezvous/server.js # <- Signalling Server
+  ./hp A # <-- client 1
+  ./hp B # <-- client 2
+```
+
 ## Build
 1. Build using golang 1.17
 ```bash

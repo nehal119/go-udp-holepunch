@@ -16,7 +16,7 @@ func Client() {
 func register() {
 	signalAddress := os.Args[2]
 
-	localAddress := ":9595" // default port
+	localAddress := "13.126.122.184:9595" // default port
 	if len(os.Args) > 3 {
 		localAddress = os.Args[3]
 	}

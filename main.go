@@ -11,6 +11,10 @@ func main() {
 		Client1(":4545")
 	case "c2":
 		Client1(":4546")
+	case "A":
+		Client2("127.0.0.1:4545", "A")
+	case "B":
+		Client2("127.0.0.1:4546", "B")
 	case "s":
 		Server1()
 	}

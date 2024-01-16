@@ -24,28 +24,29 @@ func Server1() {
 	fmt.Println("Server started on", addr)
 
 	for {
+		fmt.Println("Got incoming something")
 		// Listen for messages
 		msg := make([]byte, 1024)
 		n, remote, err := conn.ReadFromUDP(msg)
 		if err != nil {
+			fmt.Println("conn.ReadFromUDP error", err.Error())
 			continue
 		}
 		message := string(msg[0:n])
-
 		fmt.Println("Got incoming message", message)
-		if message != "register" {
-			continue
-		}
-		// Store this ip
-		clients[remote.String()] = true
 
-		for client := range clients {
-			has := clients.keys(client)
-			if len(has) > 0 {
-				// Write message
-				addr, _ := net.ResolveUDPAddr("udp", client)
-				conn.WriteToUDP([]byte(has), addr)
-				fmt.Println("Message written to", client)
+		if message == "register" {
+			// Store this ip
+			clients[remote.String()] = true
+
+			for client := range clients {
+				ipAddress := clients.keys(client)
+				if len(ipAddress) > 0 {
+					// Write message
+					addr, _ := net.ResolveUDPAddr("udp", client)
+					conn.WriteToUDP([]byte(ipAddress), addr)
+					fmt.Println("Message written to", client)
+				}
 			}
 		}
 	}
