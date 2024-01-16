@@ -29,10 +29,17 @@ func Server() {
 		localAddress = os.Args[2]
 	}
 
+	// Parse the given address
 	addr, _ := net.ResolveUDPAddr("udp", localAddress)
-	conn, _ := net.ListenUDP("udp", addr)
+	// Listen for the udp connection
+	conn, err := net.ListenUDP("udp", addr)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Listening on " + localAddress)
 
 	for {
+		// Listen for messages
 		buffer := make([]byte, 1024)
 		bytesRead, remoteAddr, err := conn.ReadFromUDP(buffer)
 		if err != nil {

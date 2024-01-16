@@ -4,6 +4,15 @@ Go. It includes the signal server and a client.
 
 ![Demo](/demo.gif "Demo")
 
+## Build
+1. Build using golang 1.17
+```bash
+  go build -o hp .
+  ./hp s  # <-- signaling server
+  ./hp c1 # <-- client 1
+  ./hp c2 # <-- client 2
+```
+
 ## Usage
 1. Set up signal server on a publicly accessible server.
 ```

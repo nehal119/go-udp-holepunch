@@ -23,7 +23,12 @@ func register() {
 
 	remote, _ := net.ResolveUDPAddr("udp", signalAddress)
 	local, _ := net.ResolveUDPAddr("udp", localAddress)
-	conn, _ := net.ListenUDP("udp", local)
+	conn, err := net.ListenUDP("udp", local)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Connecting to " + signalAddress)
 	go func() {
 		bytesWritten, err := conn.WriteTo([]byte("register"), remote)
 		if err != nil {
