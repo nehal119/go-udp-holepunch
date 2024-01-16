@@ -20,8 +20,11 @@ func Client1(clientAddr string) {
 
 	// Send register message
 	go func() {
-		conn.WriteTo([]byte("register"), remote)
-		fmt.Println("Client registered", client)
+		bytesWritten, err := conn.WriteTo([]byte("register"), remote)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Client registered", client, "bytes written", bytesWritten)
 	}()
 
 	// Transmit messages
@@ -29,12 +32,12 @@ func Client1(clientAddr string) {
 		// Read and print message received
 		msg := make([]byte, 1024)
 		// n, err := conn.Read(msg)
-		n, remote, err := conn.ReadFromUDP(msg)
+		n, remoteIP, err := conn.ReadFromUDP(msg)
 		if err != nil {
 			continue
 		}
 		messages := string(msg[0:n])
-		fmt.Println("Connection recieved message", messages, "from", remote.String())
+		fmt.Println("Connection recieved message", messages, "from", remoteIP.String())
 		// Make sure it is the first time, otherwise we will get into a loop
 		if messages == "Hello" {
 			continue

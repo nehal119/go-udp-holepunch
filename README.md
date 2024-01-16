@@ -13,6 +13,9 @@ Go. It includes the signal server and a client.
   ./hp c2 # <-- client 2
 ```
 
+#### Start background process
+nohup ./hp s > output.txt 2>&1 < /dev/null &
+
 ## Usage
 1. Set up signal server on a publicly accessible server.
 ```

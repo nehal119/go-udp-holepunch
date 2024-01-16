@@ -10,7 +10,7 @@ import (
 // var clients = clientType{}
 
 func Server1() {
-	address := ":9595"
+	address := "0.0.0.0:9595"
 
 	addr, err := net.ResolveUDPAddr("udp", address)
 	if err != nil {
