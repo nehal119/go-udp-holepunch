@@ -1,17 +1,19 @@
-# UDP Hole Punching Example in Go
+# UDP Hole Punching
 This is a very simple repo to help demonstrate how UDP hole punching works in
-Go. It includes the signal server and a client.
+Go and Node. It includes the signal server and a client.
 
 ![Demo](/demo.gif "Demo")
 
 ## Using http rendezvous server
 1. rendezvous server runs on http exposing `/register` route.
-2. When two clients are connected, each get others udp ip address and port to start hole punching. 
+2. For http to work one has to send their public ip address and thier udp port in the `/register` route to work.
+3. When two clients are connected, each get others udp ip address and port to start hole punching. 
 ```bash
   node rendezvous/server.js # <- Signalling Server
   ./hp A # <-- client 1
   ./hp B # <-- client 2
 ```
+* Note: For automatic IP and port detection, an HTTP signaling server cannot be used because it would identify the correct IP but the wrong port number. This is due to the UDP port on the client machine being different from the TCP port. To resolve this issue, the signaling server must be written exclusively for UDP. The functional signaling server code is available in server1.go for UDP and in rendezvous/publicserver.js for UDP combined with WebSocket.
 
 ## Build
 1. Build using golang 1.17
