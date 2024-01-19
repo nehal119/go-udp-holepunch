@@ -50,8 +50,12 @@ function sendPublicDataToClients (res) {
         console.log('> public endpoint of B sent to A');
         console.log('> public endpoint of A sent to B');
     }
-}
+};
 
-app.listen(33333, '127.0.0.1', function () {
-    console.log('HTTP Server listening on 127.0.0.1:33333');
+app.get('/ping', function (req, res) {
+    res.status(200).json({ message: 'pong' });
+});
+
+app.listen(33333, '0.0.0.0', function () {
+    console.log('HTTP Server listening on *:33333');
 });

@@ -13,7 +13,7 @@ Go and Node. It includes the signal server and a client.
   ./hp A # <-- client 1
   ./hp B # <-- client 2
 ```
-* Note: For automatic IP and port detection, an HTTP signaling server cannot be used because it would identify the correct IP but the wrong port number. This is due to the UDP port on the client machine being different from the TCP port. To resolve this issue, the signaling server must be written exclusively for UDP. The functional signaling server code is available in server1.go for UDP and in rendezvous/publicserver.js for UDP combined with WebSocket.
+* Note: For automatic IP and port detection, an HTTP signaling server cannot be used because it would identify the correct IP but the wrong port number. This is due to the UDP port on the client machine being different from the TCP port. To resolve this issue, the signaling server must be written exclusively for UDP. The functional signaling server code is available in `server1.go` for UDP and in `rendezvous/publicserver.js` for UDP combined with WebSocket.
 
 ## Build
 1. Build using golang 1.17
@@ -26,6 +26,7 @@ Go and Node. It includes the signal server and a client.
 
 #### Start background process
 nohup ./hp s > output.txt 2>&1 < /dev/null &
+nohup node server.js > output.txt 2>&1 < /dev/null &
 
 ## Usage
 1. Set up signal server on a publicly accessible server.
