@@ -2,7 +2,7 @@
 This is a very simple repo to help demonstrate how UDP hole punching works in
 Go and Node. It includes the signal server and a client.
 
-![Demo](/demo.gif "Demo")
+![Demo](/images/demo.gif "Demo")
 
 ## Using http rendezvous server
 1. rendezvous server runs on http exposing `/register` route.
