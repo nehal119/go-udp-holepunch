@@ -17,7 +17,7 @@ socket.on('message', function (message, remote) {
 
 function sendMessageToS () {
 	var serverPort = 33333;
-	var serverHost = '127.0.0.1';
+	var serverHost = 'IP';
 
 	var message = new Buffer('B');
 	socket.send(message, 0, message.length, serverPort, serverHost, function (err, nrOfBytesSent) {

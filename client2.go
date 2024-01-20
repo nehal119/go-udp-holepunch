@@ -12,49 +12,51 @@ import (
 
 // var started = false
 
-func Client2(clientAddr, clientName string) {
+func Client2(clientName, clientListenerAddr, clientPublicIp string) {
 	// clientAddr := ":4545"
 	// remoteAddr := "127.0.0.1:9595"
-	client, _ := net.ResolveUDPAddr("udp", clientAddr)
+	client, _ := net.ResolveUDPAddr("udp", clientListenerAddr)
 	// remote, _ := net.ResolveUDPAddr("udp", remoteAddr)
 
 	conn, err := net.ListenUDP("udp", client)
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Client listening for message on", client.String())
 
 	// Send register message
 	// Get other person IP and Port and send ours
-	resp, err := sendAndgetIP(clientName, clientAddr)
+	resp, err := sendAndgetIP(clientName, clientPublicIp)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println("Name", resp.Name)
-	fmt.Println("Address", resp.Addr)
+	// fmt.Println("Name", resp.Name)
+	// fmt.Println("Address", resp.Addr)
 
-	// Start sending mesages
+	// Start sending messages
 	// if !started {
 	go chat2(conn, resp.Addr)
 	// 	started = true
 	// }
 
-	i := 0
+	// i := 0
 
 	for {
-		if i > 10 {
-			break
-		}
+		// if i > 11 {
+		// 	break
+		// }
 		// Read and print message received
 		msg := make([]byte, 1024)
 		// n, err := conn.Read(msg)
 		n, remoteIP, err := conn.ReadFromUDP(msg)
 		if err != nil {
+			fmt.Println("conn.ReadFromUDP error", err.Error())
 			continue
 		}
 		messages := string(msg[0:n])
 		fmt.Println("Connection recieved message", messages, "from", remoteIP.String())
-		i++
+		// i++
 		// Make sure it is the first time, otherwise we will get into a loop
 		// if messages == "Hello" {
 		// 	continue
@@ -73,13 +75,14 @@ func chat2(conn *net.UDPConn, cl string) {
 	for {
 		// Send message
 		conn.WriteTo([]byte("Hello"), addr)
-		fmt.Println("Connection sent message to", cl)
+		fmt.Println("Connection sent message to", cl, "which is", addr.String())
 		time.Sleep(5 * time.Second)
 	}
 }
 
 func sendAndgetIP(clientName, clientAddr string) (Resp, error) {
-	url := "http://127.0.0.1:33333/register"
+	// url := os.Getenv("RENDEZVOUS_SERVER") + "/register"
+	url := "http://IP:33333" + "/register"
 	method := "POST"
 
 	payload := strings.NewReader(`{"client": "` + clientName + `", "address": "` + clientAddr + `"}`)
@@ -110,7 +113,7 @@ func sendAndgetIP(clientName, clientAddr string) (Resp, error) {
 
 	var response Resp
 	json.Unmarshal(body, &response)
-	fmt.Println(response.Name, response.Addr)
+	// fmt.Println(response.Name, response.Addr)
 
 	return response, nil
 }

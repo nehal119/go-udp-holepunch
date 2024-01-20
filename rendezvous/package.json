@@ -1,5 +1,5 @@
 {
-  "name": "node-udp-hole-punching",
+  "name": "udpholepunching",
   "version": "0.0.1",
   "scripts": {
     "start": "node app"
@@ -7,6 +7,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "follow-redirects": "^1.15.5"
+    "follow-redirects": "^1.15.5",
+    "request": "^2.88.2"
   }
 }

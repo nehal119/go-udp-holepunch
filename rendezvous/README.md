@@ -1,4 +1,4 @@
-# node-udp-hole-punching
+# udpholepunching
 Node.js script to demonstrate UDP hole punching through NAT
 
 
